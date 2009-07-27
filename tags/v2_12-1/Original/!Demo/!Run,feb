@@ -1,0 +1,5 @@
+WimpSlot -min 32K -max 32K
+Set Demo$Dir <Obey$Dir>
+RMEnsure SlidingHeap 2.0 RMLoad <Demo$Dir>.SlidingHp
+Run <Demo$Dir>.!RunImage
+
