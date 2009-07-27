@@ -1,0 +1,27 @@
+# Project:   SlidingHeap
+
+
+# Toolflags:
+CCflags = -c -depend !Depend -IC: -throwback
+C++flags = -c -depend !Depend -IC: -throwback
+Linkflags = -rmf -v -first SlidingHp -o $@ 
+ObjAsmflags = -throwback -NoCache -depend !Depend -APCS 3/32bit
+CMHGflags = 
+LibFileflags = -c -o $@
+Squeezeflags = -o $@
+
+
+# Final targets:
+@.SlidingHp:   @.o.SlidingHp 
+        Link $(Linkflags) @.o.SlidingHp 
+
+
+# User-editable dependencies:
+
+# Static dependencies:
+@.o.SlidingHp:   @.s.SlidingHp
+        ObjAsm $(ObjAsmflags) -o @.o.SlidingHp @.s.SlidingHp
+
+
+# Dynamic dependencies:
+o.SlidingHp: s.SlidingHp

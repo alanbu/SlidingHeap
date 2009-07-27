@@ -1,0 +1,9 @@
+Set ErrorTest$Dir <Obey$Dir>
+RMEnsure SlidingHeap 2.10 RMLoad <ErrorTest$Dir>.^.SlidingHp
+| we need the IncreaseSlots call to be available
+Wimpslot -min 32k -max 32k
+SetEval ErrorCode 255
+Taskwindow "<ErrorTest$Dir>.!RunImage" -quit -ctrl -wimpslot 32k
+If Errorcode=0 Then Run <ErrorTest$Dir>.Big
+| a nice surprise!
+Unset ErrorCode

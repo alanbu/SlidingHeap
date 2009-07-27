@@ -1,0 +1,3 @@
+| Obey file to set location of sliding Heap module
+
+Set SlidingHeap$Dir <Obey$Dir>
