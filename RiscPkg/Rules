@@ -1,0 +1,40 @@
+# Makefile for Sliding Heap Module packages
+
+VERSION=2.12-1
+PACKAGES= \
+	SlidingHeap_$(VERSION) \
+	SlidingHeap-Dev_$(VERSION)
+
+INSTALL_TO=Apps/Library
+APP_DIR=Temp/$(INSTALL_TO)/!SlidingHp
+
+
+pkg:
+	rm -rf Temp
+	mkdir -p Temp/RiscPkg
+	mkdir -p $(APP_DIR)
+	cp RiscPkg/Copyright Temp/RiscPkg
+	cp -R SysVars Temp/SysVars
+	cp !SlidingHp/!Help $(APP_DIR)
+	cp !SlidingHp/!Boot $(APP_DIR)
+	cp !SlidingHp/!Run $(APP_DIR)
+	cp -R Original/!Demo $(APP_DIR)
+	cp -R Original/!Errortest $(APP_DIR)
+	cp -R Original/Docs $(APP_DIR)
+	cp Original/ReadMe $(APP_DIR)
+	cp Original/SHeap $(APP_DIR)
+	cp Original/SlidingHp $(APP_DIR)
+	make -C Temp -f ../RiscPkg/Rules $(PACKAGES)
+	rm -rf Temp
+
+.PHONY: $(PACKAGES)
+$(PACKAGES): %:
+	riscpkg-gencontrol $(firstword $(subst _, ,$@)) < ../RiscPkg/Control > RiscPkg/Control
+	rm -f ../RiscPkg/$@
+	zip -r ../RiscPkg/$@ * -i@../RiscPkg/$(firstword $(subst _, ,$@)).inc
+
+# If you wanted to rebuild the module use this target
+build:	Original/BasSource/SlidingHp
+	Run Original.BasSource.SlidingHp
+
+

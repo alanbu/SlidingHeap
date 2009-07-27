@@ -1,0 +1,34 @@
+The Sliding Heap module is © Steven Haslam 1992 and is distributed under the GNU Public Licence.   You will need the procedures in the SHeap BASIC library, or similar, to use it.
+
+It creates and manages a sliding heap of blocks of memory, claimed from a program's Wimpslot as necessary, thus avoiding the fragmentation caused by repeatedly claiming and releasing memory from the RMA.
+The module works under RISC OS 2 and RISC OS 3∑1, and is compatible with RISC OS 3∑5 and greater, and StrongARM, although dynamic areas can be used to perform the same task on such systems.
+
+This new release of SlidingHeap (version 2.xx) has been reconstructed from a disassembly, in the absence of the original source code. The module should work in 32-bit ARM modes, and therefore has been flagged as compatible with RISC OS 5.  For further information contact chrisbazley@bigfoot.com.
+
+1st December 2002
+
+Changes to the accompanying BASIC library
+-----------------------------------------
+è  A new function has been added to the BASIC library - FNsliding_block_size(anchor%), which returns the current size of the specified block.
+è Two new procedures have been added - PROCverify_heap, which enables the programmer to force a explicit check for corruption of the sliding heap at any point in his code, and PROCincreaseslots, which allows the programmer to increase the number of available slots in the heap, or to read its current setting.
+è  PROCheapsinfo now takes a parameter - PROCheapsinfo(address%), where address% points to a buffer of length 256 bytes.   As a consequence, the library no longer relies on the (undocumented) existence of a block with a certain given name!
+è  Variables have been made LOCAL wherever possible, and global variables use the prefix 'sh_', e.g. 'sh_heap_trigger%'.
+è  PROCdestroyheaps now ensures that all anchors in use are reset to zero before the heap is destroyed, making it 'safe' to reuse them after a subsequent PROCinitheaps.
+
+Module history
+--------------
+Version 2.01
+è Most SWIs no longer corrupt R0.
+è SWIs now *do* preserve flags in 26-bit mode (although not in new 32-bit mode) - which they never did before!
+è A few optimisations, i.e. SUBS R1,R1,#1:BNE in place of SUB R1,R1,#1:CMP R1,#0:BNE
+
+Version 2.10 (18 Nov 2002)
+è Numbers of heap slots available/used are now reported via OS_ConvertCardinal (e.g. "2048") rather than OS_ConvertSpacedCardinal (e.g. "2 048"), as the leading digit proved too easily overlooked.
+è New SWI added - SlidingHeap_IncreaseSlots.   This allows programs to use a indeterminate number of blocks, without having to set an upper limit at the time of initialisation.
+
+Version 2.11 (16 Dec 2002)
+è  A few more SUBS optimisations.
+
+Version 2.12 (13 Oct 2003)
+è SlidingHeap_ExtendBlock now rounds requested block sizes *up* to the nearest word, just as SlidingHeap_NewBlock always has....   Optimised this to use single BIC in place of AND NOT construction.
+è Removed a large chunk of dead code from SlidingHeap_ScrapBlock (as far as I know, never called) dealing with the possibility of non-word-aligned blocks.   As the SlidingHeap_ExtendBlock bug demonstrated, the SlidingHeap module cannot in any case cope gracefully with non-word-aligned blocks if they are accidentally created - and they should now never happen.   They were never designed to happen in the first place!
