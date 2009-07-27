@@ -1,0 +1,18 @@
+Sliding Heap module by Steven Haslam 1992.
+
+32 bit compatibility by Christopher Bazley and much additional work
+by Harriet Bazley.
+
+This version has been packaged for the RISC OS Packaging project
+(www.riscpkg.org) by Alan Buckley <alan_baa@hotmail.com>.
+
+To package it I've included it in an Application directory !SlidingHp
+that sets a variable SlidingHp$Dir.
+
+There are two packages, the normal that only includes the module and
+the BASIC library to use it and a "dev" package that includes the
+documentation and examples.
+
+If you have installed the "dev" package you will find the documentation
+and examples by holding shift and double clicking on the !SlidingHp
+application.
