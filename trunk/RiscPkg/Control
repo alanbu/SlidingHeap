@@ -3,7 +3,7 @@ Version: 2.12-1
 Section: Library
 Priority: Optional
 Maintainer: Alan Buckley <alan_baa@hotmail.com>
-Standards-Version: 0.1
+Standards-Version: 0.1.0
 Licence: Free
 Description: Create and manage a sliding heap of blocks of memory.
  This is the source package.
